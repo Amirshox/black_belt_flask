@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from flask_login import login_user, logout_user, login_required
+from flask import Blueprint, render_template, redirect, url_for, flash, session
+from flask_login import login_required
 
 from forms.point import PointForm
-from models import User, Point
+from models import Point
 from utils.db import db
 
 point = Blueprint("point", __name__)
@@ -11,12 +11,12 @@ point = Blueprint("point", __name__)
 @point.route('/', methods=['GET'])
 @login_required
 def points():
-    user_id = session["user_id"]
+    user_id = session["_user_id"]
 
     points = Point.query.all()
     user_points = Point.query.filter_by(author_id=user_id)
 
-    return render_template('index.html', points=points, user_points=user_points)
+    return render_template('point/index.html', points=points, user_points=user_points)
 
 
 @point.route('/new', methods=['GET', 'POST'])
@@ -34,7 +34,7 @@ def add_point():
         )
         db.session.add(point)
         db.session.commit()
-    return render_template('index.html')
+    return render_template('point/index.html')
 
 
 @point.route("/<int:id>/edit", methods=["GET", "POST"])
@@ -54,12 +54,12 @@ def update(id):
 
         return redirect(url_for('point.points'))
 
-    return render_template("index.html", point=point)
+    return render_template("point/index.html", point=point)
 
 
 @point.route("/<int:id>/delete", methods=["GET"])
 def delete(id):
-    point = Point.query.get(id=id)
+    point = Point.query.get(id)
     db.session.delete(point)
     db.session.commit()
 

@@ -19,7 +19,7 @@ def register():
             db.session.commit()
             return redirect(url_for('auth.login'))
         flash('Email Address is Already Registered.')
-    return render_template('registration.html', form=form)
+    return render_template('auth/registration.html', form=form)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -32,7 +32,7 @@ def login():
             next = request.args.get("next")
             return redirect(next or url_for('point.points'))
         flash('Invalid email address or Password.')
-    return render_template('login.html', form=form)
+    return render_template('auth/login.html', form=form)
 
 
 @auth.route("/logout")
