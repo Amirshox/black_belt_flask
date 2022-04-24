@@ -4,7 +4,7 @@ from flask_login import LoginManager
 
 from config import DATABASE_CONNECTION_URI
 from models import User
-from routes import auth
+from routes import auth, point
 
 app = Flask(__name__)
 
@@ -14,7 +14,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.get(user_id)
 
 
 # settings
@@ -29,3 +29,4 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 SQLAlchemy(app)
 
 app.register_blueprint(auth)
+app.register_blueprint(point, url_prefix='/points')
