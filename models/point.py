@@ -9,6 +9,7 @@ class Point(db.Model):
     description = db.Column(db.Text)
     price = db.Column(db.Float, unique=True)
     quantity = db.Column(db.Integer)
+    sold_count = db.Column(db.Integer, default=0)
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship("User", backref=backref("user", uselist=False))

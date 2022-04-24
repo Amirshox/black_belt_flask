@@ -1,99 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1 style="text-align: justify; color: blue;">Create an Account</h1>
-<br>
-<form action="" method="post">
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.first_name(placeholder="first_name",
-      style='width: 50%;
-      font-weight: bold;
-      padding: 12px 20px ;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box') }}
-        {% for error in form.first_name.errors %}
-            <p>{{ error }}</p>
-        {% endfor %}
-    </div>
-    <br>
-    <div>
-        {{ form.last_name(placeholder="last_name",
-      style='width: 50%;
-      font-weight: bold;
-      padding: 12px 20px ;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box') }}
-        {% for error in form.last_name.errors %}
-            <p>{{ error }}</p>
-        {% endfor %}
-    </div>
-    <br>
-    <div>
-        {{ form.email(placeholder="email",
-      style='width: 50%;
-      font-weight: bold;
-      padding: 12px 20px ;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box') }}
-        {% for error in get_flashed_messages() %}
-            <p>{{ error }}</p>
-        {% endfor %}
-        {% for error in form.email.errors %}
-            <p>{{ error }}</p>
-        {% endfor %}
-    </div>
-    <br>
-    <div>
-        {{ form.password1(placeholder="password",
-      style='width: 50%;
-      font-weight: bold;
-      padding: 12px 20px ;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box') }}
-        {% for error in form.password1.errors %}
-            <p>{{ error }}</p>
-        {% endfor %}
-    </div>
-    <br>
-    <div>
-        {{ form.password2(placeholder="Confirm password",
-      style='width: 50%;
-      font-weight: bold;
-      padding: 12px 20px ;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box') }}
-        {% for error in form.password2.errors %}
-            <p>{{ error }}</p>
-        {% endfor %}
-    </div>
-    <br>
-    <div>{{ form.submit(
-      style ='background-color: #4CAF50;
-      color: white;
-      width: 50%;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 4px') }}
-    </div>
-</form>
-<p></p>
-<h3 style="color: blue; margin-left:100px;"><a href="{{ url_for('auth.login') }}">Already have an account?</a></h3>
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="container vh-100">
+        <div class="row  h-100 w-100">
+            <div class="col-12 col-md-6 col-lg-4 m-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Register</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3 needs-validation" action="" method="post" novalidate>
+                            {{ form.hidden_tag() }}
+                            <div class="col-12 col-xl-6 position-relative">
+                                <label for="validationTooltip01" class="form-label">First name:</label>
+                                {{ form.first_name(class="form-control", id="validationTooltip01") }}
+                                <div class="invalid-feedback">
+                                    Please choose a unique and valid First name.
+                                </div>
+                                {% for error in form.first_name.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 col-xl-6 position-relative">
+                                <label for="validationTooltip02" class="form-label">Last name:</label>
+                                {{ form.last_name(class="form-control", id="validationTooltip02") }}
+                                <div class="invalid-feedback">
+                                    Please choose a unique and valid Last name.
+                                </div>
+                                {% for error in form.last_name.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 position-relative">
+                                <label for="validationTooltipUsername" class="form-label">Email:</label>
+                                <div class="input-group has-validation">
+                                    {{ form.email(class="form-control", id="validationTooltipUsername") }}
+                                    <div class="invalid-feedback">
+                                        Please choose a unique and valid Email.
+                                    </div>
+                                    {% for error in get_flashed_messages() %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                    {% for error in form.email.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-12 position-relative">
+                                <label for="newPassword" class="form-label">Password:</label>
+                                {{ form.password1(class="form-control", id="newPassword") }}
+                                <div class="invalid-feedback">
+                                    Please provide a valid Password.
+                                </div>
+                                {% for error in form.password1.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 position-relative">
+                                <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                                {{ form.password2(class="form-control") }}
+                                <div class="invalid-feedback">
+                                    Please provide a valid Confirm Password.
+                                </div>
+                                {% for error in form.password2.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 d-flex justify-content-between" style="align-items: center">
 
-</body>
-</html>
+                                <h6 style="color: blue"><a href="{{ url_for('auth.login') }}">Already
+                                    have an account?</a></h6>
+                                {{ form.submit(class="btn btn-primary") }}
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

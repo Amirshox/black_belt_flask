@@ -25,9 +25,9 @@ def detail_point(id):
     user_id = session["_user_id"]
 
     point = Point.query.get(id)
-    bought_points_count = User.query.get(user_id).points.filter(Point.id == id).count()
+    # bought_points_count = User.query.get(user_id).points.filter(Point.id == id).count()
 
-    return render_template('point/index.html', point=point, bought_points_count=bought_points_count)
+    return render_template('point/index.html', point=point)
 
 
 @point.route('/new', methods=['GET', 'POST'])
@@ -84,18 +84,23 @@ def bought_by_user(id):
     user_id = session["_user_id"]
 
     point = Point.query.get(id)
+    user = User.query.get(user_id)
 
-    if point.quantity > 0:
-        user = User.query.get(user_id)
+    bought_points_count = len(User.query.get(user_id).points.filter(Point.id == id).all())
 
-        user.points.append(point)
-        point.quantity -= 1
+    if bought_points_count == 0:
+        if point.quantity > point.sold_count:
 
-        db.session.add(user)
-        db.session.commit()
+            user.points.append(point)
+            point.sold_count += 1
 
-        flash('Point bought successfully!')
+            db.session.add(user)
+            db.session.commit()
+
+            flash('Point bought successfully!')
+        else:
+            flash('Point bought unsuccessfully!')
     else:
-        flash('Point bought unsuccessfully!')
+        flash('Point already bought!')
 
     return redirect(url_for('point.points'))
