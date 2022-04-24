@@ -3,13 +3,7 @@ from utils.db import db
 
 class Point(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(63))
-    last_name = db.Column(db.String(63))
+    title = db.Column(db.String(100))
+    description = db.Column(db.String(63))
     email = db.Column(db.String(63), unique=True)
     password = db.Column(db.String(200))
-
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
