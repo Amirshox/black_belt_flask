@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from flask_login import login_user, logout_user, login_required
 
-from forms.auth import RegistrationForm, LoginForm
 from forms.point import PointForm
 from models import User, Point
 from utils.db import db
@@ -51,7 +50,7 @@ def update(id):
 
         db.session.commit()
 
-        flash('Contact updated successfully!')
+        flash('Point updated successfully!')
 
         return redirect(url_for('point.points'))
 
@@ -64,6 +63,6 @@ def delete(id):
     db.session.delete(point)
     db.session.commit()
 
-    flash('Contact deleted successfully!')
+    flash('Point deleted successfully!')
 
     return redirect(url_for('point.points'))
