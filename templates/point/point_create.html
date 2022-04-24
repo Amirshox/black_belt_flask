@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="container vh-100">
+        <div class="row  h-100 w-100">
+            <div class="col-12 d-flex justify-content-end align-items-center mt-4">
+                <!-- <h2>Color Magic</h2> -->
+                <div>
+                    <a href="{{ url_for('point.points') }}" class="btn btn-primary">Dashbord</a>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logaut</a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Add a Pointing</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3 needs-validation" action="" method="post" novalidate>
+                            {{ form.hidden_tag() }}
+                            <div class="col-12 position-relative">
+                                <label for="validationTooltip01" class="form-label">Title:</label>
+                                {{ form.title(class="form-control", id="validationTooltip01" ) }}
+                                <div class="invalid-feedback">
+                                    Please choose a unique and valid Title.
+                                </div>
+                                {% for error in form.title.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 position-relative">
+                                <label for="validationTooltip02" class="form-label">Description:</label>
+                                {{ form.description(class="form-control") }}
+                                <div class="invalid-feedback">
+                                    Please choose a unique and valid Description.
+                                </div>
+                                {% for error in form.description.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 position-relative">
+                                <label for="validationTooltipUsername" class="form-label">Price:</label>
+                                <div class="input-group has-validation">
+                                    {{ form.price(class="form-control", type='number') }}
+                                    <div class="invalid-feedback">
+                                        Please choose a unique and valid Price.
+                                    </div>
+                                </div>
+                                {% for error in form.price.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 position-relative">
+                                <label for="newPassword" class="form-label">Quentity:</label>
+                                {{ form.quantity(type="number", class="form-control") }}
+                                <div class="invalid-feedback">
+                                    Please provide a valid Quentity.
+                                </div>
+                                {% for error in form.quantity.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 d-flex justify-content-end">
+                                {{ form.submit(class="btn btn-primary", type="submit") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

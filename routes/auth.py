@@ -32,6 +32,7 @@ def login():
             next = request.args.get("next")
             return redirect(next or url_for('point.points'))
         flash('Invalid email address or Password.')
+    flash('Password must be at least 8 characters long')
     return render_template('auth/login.html', form=form)
 
 

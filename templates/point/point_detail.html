@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-between align-items-center mt-4">
+                <h2>{{ point.title }}</h2>
+                <div>
+
+                    <a href="{{ url_for('point.add_point') }}" class="btn btn-success">Add pointings</a>
+                    <a href="{{ url_for('point.points') }}" class="btn btn-primary">Dashbord</a>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+            <div class="col-12 mt-5">
+                <h4>Pointed by {{ point.author.full_name }} </h4>
+                <h6 class="mt-2">Description:</h6>
+                <div style="padding-left: 20px;" class="w-50">
+                    <p>{{ point.description }}</p>
+                </div>
+
+                <h4 class="mt-5">Price: {{ point.price }} $</h4>
+                <h6 style="margin-top: 20px;">Number Purchased:</h6>
+                <p style="padding-left: 20px;">{{ point.sold_count }}</p>
+            </div>
+            {% if is_buy %}
+                {% if point.quantity != point.sold_count %}
+                    <div class="col-12">
+                        <a href="{{ url_for('point.bought_by_user', id=point.id) }}" class="btn btn-success">Buy</a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

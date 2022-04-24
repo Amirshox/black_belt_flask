@@ -7,7 +7,7 @@ class Point(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     description = db.Column(db.Text)
-    price = db.Column(db.Float, unique=True)
+    price = db.Column(db.Float)
     quantity = db.Column(db.Integer)
     sold_count = db.Column(db.Integer, default=0)
 

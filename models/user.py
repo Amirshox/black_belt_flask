@@ -23,3 +23,7 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    @property
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name

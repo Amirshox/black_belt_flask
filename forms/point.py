@@ -8,4 +8,4 @@ class PointForm(FlaskForm):
     description = TextAreaField('Description', validators=[Length(min=10), DataRequired()])
     price = FloatField('Price', validators=[NumberRange(min=0), DataRequired()])
     quantity = IntegerField('Quantity', validators=[NumberRange(min=0), DataRequired()])
-    submit = SubmitField('Point')
+    submit = SubmitField('Submit')

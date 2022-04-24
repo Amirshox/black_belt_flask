@@ -1,3 +1,4 @@
+import flask
 from flask import Blueprint, render_template, redirect, url_for, flash, session
 from flask_login import login_required
 
@@ -14,9 +15,10 @@ def points():
     user_id = session["_user_id"]
 
     points = Point.query.all()
+    user = User.query.get(user_id)
     bought_points = User.query.get(user_id).points
 
-    return render_template('point/index.html', points=points, bought_points=bought_points)
+    return render_template('point/point_list.html', points=points, bought_points=bought_points, user=user)
 
 
 @point.route('/<int:id>/', methods=['GET'])
@@ -25,9 +27,12 @@ def detail_point(id):
     user_id = session["_user_id"]
 
     point = Point.query.get(id)
-    # bought_points_count = User.query.get(user_id).points.filter(Point.id == id).count()
+    user = User.query.get(user_id)
 
-    return render_template('point/index.html', point=point)
+    is_buy = True if len(User.query.get(user_id).points.filter(
+        Point.id == id).all()) == 0 else False
+
+    return render_template('point/point_detail.html', point=point, is_buy=is_buy)
 
 
 @point.route('/new', methods=['GET', 'POST'])
@@ -45,14 +50,16 @@ def add_point():
         )
         db.session.add(point)
         db.session.commit()
-    return render_template('point/index.html')
+        return redirect(url_for('point.points'))
+    return render_template('point/point_create.html', form=form)
 
 
 @point.route("/<int:id>/edit/", methods=["GET", "POST"])
 def update(id):
-    point = Point.query.get(id)
+    point = Point.query.get_or_404(id)
 
     form = PointForm()
+
     if form.validate_on_submit():
         point.title = form.title.data,
         point.description = form.description.data,
@@ -65,7 +72,7 @@ def update(id):
 
         return redirect(url_for('point.points'))
 
-    return render_template("point/index.html", point=point)
+    return render_template("point/point_edit.html", form=form)
 
 
 @point.route("/<int:id>/delete/", methods=["GET"])
