@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, session
 from flask_login import login_required
 
 from forms.point import PointForm
-from models import Point
+from models import Point, User
 from utils.db import db
 
 point = Blueprint("point", __name__)
@@ -14,9 +14,20 @@ def points():
     user_id = session["_user_id"]
 
     points = Point.query.all()
-    user_points = Point.query.filter_by(author_id=user_id)
+    bought_points = User.query.get(user_id).points
 
-    return render_template('point/index.html', points=points, user_points=user_points)
+    return render_template('point/index.html', points=points, bought_points=bought_points)
+
+
+@point.route('/<int:id>/', methods=['GET'])
+@login_required
+def detail_point(id):
+    user_id = session["_user_id"]
+
+    point = Point.query.get(id)
+    bought_points_count = User.query.get(user_id).points.filter(Point.id == id).count()
+
+    return render_template('point/index.html', point=point, bought_points_count=bought_points_count)
 
 
 @point.route('/new', methods=['GET', 'POST'])
@@ -24,7 +35,7 @@ def points():
 def add_point():
     form = PointForm()
     if form.validate_on_submit():
-        user_id = session["user_id"]
+        user_id = session["_user_id"]
         point = Point(
             title=form.title.data,
             description=form.description.data,
@@ -37,7 +48,7 @@ def add_point():
     return render_template('point/index.html')
 
 
-@point.route("/<int:id>/edit", methods=["GET", "POST"])
+@point.route("/<int:id>/edit/", methods=["GET", "POST"])
 def update(id):
     point = Point.query.get(id)
 
@@ -57,12 +68,34 @@ def update(id):
     return render_template("point/index.html", point=point)
 
 
-@point.route("/<int:id>/delete", methods=["GET"])
+@point.route("/<int:id>/delete/", methods=["GET"])
 def delete(id):
     point = Point.query.get(id)
     db.session.delete(point)
     db.session.commit()
 
     flash('Point deleted successfully!')
+
+    return redirect(url_for('point.points'))
+
+
+@point.route("/<int:id>/buy/", methods=["GET"])
+def bought_by_user(id):
+    user_id = session["_user_id"]
+
+    point = Point.query.get(id)
+
+    if point.quantity > 0:
+        user = User.query.get(user_id)
+
+        user.points.append(point)
+        point.quantity -= 1
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash('Point bought successfully!')
+    else:
+        flash('Point bought unsuccessfully!')
 
     return redirect(url_for('point.points'))

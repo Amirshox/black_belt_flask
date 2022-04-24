@@ -8,7 +8,7 @@ from utils.db import db
 auth = Blueprint("auth", __name__)
 
 
-@auth.route('/register', methods=['POST', 'GET'])
+@auth.route('/register/', methods=['POST', 'GET'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -22,7 +22,7 @@ def register():
     return render_template('auth/registration.html', form=form)
 
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/login/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -35,8 +35,8 @@ def login():
     return render_template('auth/login.html', form=form)
 
 
-@auth.route("/logout")
+@auth.route("/logout/")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth:login'))
+    return redirect(url_for('auth.login'))
