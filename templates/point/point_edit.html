@@ -21,7 +21,7 @@
                             <div class="d-flex justify-content-between mt-4">
                                 <label for="validationTooltip01">Title:</label>
                                 <div class="col-6">
-                                    {{ form.title }}
+                                    {{ form.title(class="w-100") }}
                                 </div>
                                 {% for error in form.title.errors %}
                                     <p>{{ error }}</p>
@@ -30,7 +30,7 @@
                             <div class="d-flex justify-content-between mt-2">
                                 <label for="validationTooltip02">Description:</label>
                                 <div class="col-6">
-                                    {{ form.description }}
+                                    {{ form.description(class="w-100") }}
                                 </div>
                                 {% for error in form.description.errors %}
                                     <p>{{ error }}</p>
@@ -39,7 +39,7 @@
                             <div class="d-flex justify-content-between mt-2">
                                 <label for="validationTooltipUsername">Price:</label>
                                 <div class="col-6">
-                                    {{ form.price }}
+                                    {{ form.price(class="w-100") }}
                                 </div>
                             </div>
                             {% for error in form.price.errors %}
@@ -48,7 +48,7 @@
                             <div class="d-flex justify-content-between mt-2">
                                 <label for="newPassword">Quantity:</label>
                                 <div class="col-6">
-                                    {{ form.quantity }}
+                                    {{ form.quantity(class="w-100") }}
                                 </div>
                             </div>
                             {% for error in form.quantity.errors %}
