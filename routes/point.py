@@ -66,11 +66,17 @@ def update(id):
         point.price = form.price.data,
         point.quantity = form.quantity.data,
 
+        db.session.add(point)
         db.session.commit()
 
-        flash('Point updated successfully!')
 
-        return redirect(url_for('point.points'))
+        flash('Point updated successfully!')
+        return redirect(url_for('point.points', id=point.id))
+
+    form.title.data = point.title
+    form.description.data = point.description
+    form.price.data = point.price
+    form.quantity.data = point.quantity
 
     return render_template("point/point_edit.html", form=form)
 
