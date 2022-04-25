@@ -22,6 +22,7 @@ def load_user(user_id):
 application.secret_key = 'mysecret'
 
 application.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_URI
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 SQLAlchemy(application)
 
