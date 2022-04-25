@@ -67,20 +67,20 @@
                                 <div class="invalid-feedback">
                                     Please provide a valid Email.
                                 </div>
-                                {% for error in form.email.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
                             </div>
+                            {% for error in form.email.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
                             <div class="col-12 position-relative">
                                 <label for="confirmPassword" class="form-label">Confirm Password:</label>
                                 {{ form.password(class="form-control") }}
                                 <div class="invalid-feedback">
                                     Please provide a valid Confirm Password.
                                 </div>
-                                {% for error in get_flashed_messages() %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
                             </div>
+                            {% for error in get_flashed_messages() %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
                             <p>{{ form.remember() }} {{ form.remember.label }}</p>
                             <div class="col-12 d-flex justify-content-between"
                                  style="align-items: center">
