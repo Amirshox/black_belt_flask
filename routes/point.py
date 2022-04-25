@@ -1,13 +1,13 @@
 import flask
 from flask import Blueprint, render_template, redirect, url_for, flash, session
 from flask_login import login_required
+from sqlalchemy import desc
 
 from forms.point import PointForm
 from models import Point, User
 from utils.db import db
 
 point = Blueprint("point", __name__)
-from sqlalchemy import desc
 
 
 @point.route('/', methods=['GET'])
@@ -15,10 +15,10 @@ from sqlalchemy import desc
 def points():
     user_id = session["_user_id"]
 
-    points = Point.query.order_by(desc(Point.id))
     user = User.query.get(user_id)
-    # bought_points = User.query.get(user_id).points.order_by(desc(Point.id))
-    bought_points = []
+    bought_points = user.points.order_by(desc(Point.id))
+
+    points = Point.query.order_by(desc(Point.id))
 
     return render_template('point/point_list.html', points=points, bought_points=bought_points, user=user)
 
