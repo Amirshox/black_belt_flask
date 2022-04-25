@@ -29,7 +29,6 @@ def detail_point(id):
     user_id = session["_user_id"]
 
     point = Point.query.get(id)
-    user = User.query.get(user_id)
 
     is_buy = True if len(User.query.get(user_id).points.filter(
         Point.id == id).all()) == 0 else False
