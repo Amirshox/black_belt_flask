@@ -3,7 +3,7 @@
     <section class="container">
         <div class="row">
             <div class="col-12 d-flex justify-content-between align-items-center mt-4">
-                <h2>Welcome {{ user.full_name }}</h2>
+                <h1>Welcome {{ user.full_name }}</h1>
                 <div>
                     <a href="{{ url_for('point.add_point') }}">Add pointings</a>
                     <a href="{{ url_for('auth.index') }}">
@@ -14,7 +14,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-12 mt-5">
-                <h6>Pointings:</h6>
+                <h3>Pointings:</h3>
                 <div class="card mt-3 h-100" style="border: solid 2px;">
                     <div class="card-body">
                         {% for point in points %}
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-12 mt-5 ">
-                <h6>Your Purchased Pointings:</h6>
+                <h3>Your Purchased Pointings:</h3>
                 <div class="card mt-3 h-100" style="border: solid 2px;">
                     <div class="card-body">
                         {% for point in bought_points %}

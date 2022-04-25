@@ -7,7 +7,9 @@
                 <div>
                     <a href="{{ url_for('point.add_point') }}" style="padding-right: 50px;">Add pointings</a>
                     <a href="{{ url_for('point.points') }}" style="padding-right: 50px;">Dashboard</a>
-                    <button>Logout</button>
+                    <a href="{{ url_for('auth.index') }}">
+                        <button style="margin-left: 50px;">Logout</button>
+                    </a>
                 </div>
             </div>
             <div class="col-12 mt-5">
