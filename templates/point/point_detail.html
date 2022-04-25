@@ -3,31 +3,41 @@
     <section class="container">
         <div class="row">
             <div class="col-12 d-flex justify-content-between align-items-center mt-4">
-                <h2>{{ point.title }}</h2>
+                <div></div>
                 <div>
-
-                    <a href="{{ url_for('point.add_point') }}" class="btn btn-success">Add pointings</a>
-                    <a href="{{ url_for('point.points') }}" class="btn btn-primary">Dashbord</a>
-                    <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
+                    <a href="{{ url_for('point.add_point') }}" style="padding-right: 50px;">Add pointings</a>
+                    <a href="{{ url_for('point.points') }}" style="padding-right: 50px;">Dashboard</a>
+                    <button>Logout</button>
                 </div>
             </div>
             <div class="col-12 mt-5">
-                <h4>Pointed by {{ point.author.full_name }} </h4>
-                <h6 class="mt-2">Description:</h6>
-                <div style="padding-left: 20px;" class="w-50">
+                <h3>{{ point.title }}</h3>
+                <h6 class="mt-5">Pointed by {{ point.author.full_name }} </h6>
+
+                <h6 class="mt-4">Description:</h6>
+                <div style="padding-left: 20px;" class="w-25">
                     <p>{{ point.description }}</p>
                 </div>
 
-                <h4 class="mt-5">Price: {{ point.price }} $</h4>
+                <h6 class="mt-2">Price:</h6>
+                <div style="padding-left: 20px;" class="w-50">
+                    <p>$ {{ point.price }}</p>
+                </div>
                 <h6 style="margin-top: 20px;">Number Purchased:</h6>
                 <p style="padding-left: 20px;">{{ point.sold_count }}</p>
             </div>
             {% if is_buy %}
                 {% if point.quantity != point.sold_count %}
                     <div class="col-12">
-                        <a href="{{ url_for('point.bought_by_user', id=point.id) }}" class="btn btn-success">Buy</a>
+                        <a href="{{ url_for('point.bought_by_user', id=point.id) }}">
+                            <button>Buy</button>
+                        </a>
                     </div>
+                {% else %}
+                    <h6>Sold out</h6>
                 {% endif %}
+            {% else %}
+                <h6>You are already bought!</h6>
             {% endif %}
         </div>
     </section>

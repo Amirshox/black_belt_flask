@@ -1,66 +1,61 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <section class="container vh-100">
-        <div class="row  h-100 w-100">
-            <div class="col-12 d-flex justify-content-end align-items-center mt-4">
-                <!-- <h2>Color Magic</h2> -->
+    <section class="container  vh-100">
+        <div class="row  h-75 w-100">
+            <div class="col-12 d-flex justify-content-end align-items-start mt-3">
                 <div>
-                    <a href="{{ url_for('point.points') }}" class="btn btn-primary">Dashbord</a>
-                    <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logaut</a>
+                    <a href="{{ url_for('point.points') }}" style="margin-right: 50px;">Dashbord</a>
+                    <a href="{{ url_for("auth.logout") }}">
+                        <button>Logout</button>
+                    </a>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-4 mx-auto">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Edit a Pointing</h3>
+            <div class="col-12 col-md-6 col-lg-5 ml-auto ">
+                <div>
+                    <div>
+                        <h4>Edit a Pointing</h4>
                     </div>
-                    <div class="card-body">
-                        <form class="row g-3 needs-validation" action="" method="post" novalidate>
+                    <div>
+                        <form action="" method="post">
                             {{ form.hidden_tag() }}
-                            <div class="col-12 position-relative">
-                                <label for="validationTooltip01" class="form-label">Title:</label>
-                                {{ form.title(class="form-control", id="validationTooltip01" ) }}
-                                <div class="invalid-feedback">
-                                    Please choose a unique and valid Title.
+                            <div class="d-flex justify-content-between mt-4">
+                                <label for="validationTooltip01">Title:</label>
+                                <div class="col-6">
+                                    {{ form.title }}
                                 </div>
                                 {% for error in form.title.errors %}
                                     <p>{{ error }}</p>
                                 {% endfor %}
                             </div>
-                            <div class="col-12 position-relative">
-                                <label for="validationTooltip02" class="form-label">Description:</label>
-                                {{ form.description(class="form-control") }}
-                                <div class="invalid-feedback">
-                                    Please choose a unique and valid Description.
+                            <div class="d-flex justify-content-between mt-2">
+                                <label for="validationTooltip02">Description:</label>
+                                <div class="col-6">
+                                    {{ form.description }}
                                 </div>
                                 {% for error in form.description.errors %}
                                     <p>{{ error }}</p>
                                 {% endfor %}
                             </div>
-                            <div class="col-12 position-relative">
-                                <label for="validationTooltipUsername" class="form-label">Price:</label>
-                                <div class="input-group has-validation">
-                                    {{ form.price(class="form-control", type='number') }}
-                                    <div class="invalid-feedback">
-                                        Please choose a unique and valid Price.
-                                    </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <label for="validationTooltipUsername">Price:</label>
+                                <div class="col-6">
+                                    {{ form.price }}
                                 </div>
-                                {% for error in form.price.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
                             </div>
-                            <div class="col-12 position-relative">
-                                <label for="newPassword" class="form-label">Quentity:</label>
-                                {{ form.quantity(type="number", class="form-control") }}
-                                <div class="invalid-feedback">
-                                    Please provide a valid Quentity.
+                            {% for error in form.price.errors %}
+                                <p style="color: red; display: flex; justify-content: end">{{ error }}</p>
+                            {% endfor %}
+                            <div class="d-flex justify-content-between mt-2">
+                                <label for="newPassword">Quantity:</label>
+                                <div class="col-6">
+                                    {{ form.quantity }}
                                 </div>
-                                {% for error in form.quantity.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
                             </div>
-                            <div class="col-12 d-flex justify-content-end">
-                                {{ form.submit(class="btn btn-primary", type="submit") }}
+                            {% for error in form.quantity.errors %}
+                                <p style="color: red; display: flex; justify-content: end">{{ error }}</p>
+                            {% endfor %}
+                            <div class="col-12 d-flex mt-3 justify-content-end">
+                                {{ form.submit }}
                             </div>
                         </form>
                     </div>
