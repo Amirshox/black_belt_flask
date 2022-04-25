@@ -11,19 +11,19 @@
                 </div>
             </div>
             <div class="col-12 mt-5">
-                <h3>{{ point.title }}</h3>
-                <h6 class="mt-5">Pointed by {{ point.author.full_name }} </h6>
+                <h2>{{ point.title }}</h2>
+                <h6 class="mt-4">Pointed by <i>{{ point.author.full_name }}</i></h6>
 
-                <h6 class="mt-4">Description:</h6>
+                <h5 class="mt-4">Description:</h5>
                 <div style="padding-left: 20px;" class="w-25">
                     <p>{{ point.description }}</p>
                 </div>
 
-                <h6 class="mt-2">Price:</h6>
+                <h5 class="mt-2">Price:</h5>
                 <div style="padding-left: 20px;" class="w-50">
                     <p>$ {{ point.price }}</p>
                 </div>
-                <h6 style="margin-top: 20px;">Number Purchased:</h6>
+                <h5 style="margin-top: 20px;">Number Purchased:</h5>
                 <p style="padding-left: 20px;">{{ point.sold_count }}</p>
             </div>
             {% if is_buy %}

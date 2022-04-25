@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <section class="container vh-100">
+        <div class="row justify-content-center align-items-center h-100 w-100">
+            <div class="col-4">
+                <div>
+
+                    <div class="pb-2">
+                        <h4>Register</h4>
+                    </div>
+                    <div>
+                        <form action="" method="post">
+                            {{ register_form.hidden_tag() }}
+                            <div class="d-flex justify-content-between">
+                                <label for="validationTooltip01">First name:</label>
+                                {#                                    <input type="text" id="validationTooltip01" required>#}
+                                {{ register_form.first_name }}
+                            </div>
+                            {% for error in register_form.first_name.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                            <div class="d-flex justify-content-between mt-2">
+                                <label for="validationTooltip02">Last name:</label>
+                                {#                                <input type="text" id="validationTooltip02" required>#}
+                                {{ register_form.last_name }}
+                            </div>
+                            {% for error in register_form.last_name.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                            <div class="d-flex justify-content-between mt-2">
+                                <label for="validationTooltipUsername">Email:</label>
+                                {#                                <input type="email" id="validationTooltipUsername" required>#}
+                                {{ register_form.email }}
+                            </div>
+                            {% for error in register_form.email.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                            <div class="d-flex justify-content-between mt-2">
+                                <label for="newPassword">Password:</label>
+                                {#                                <input name="newPassword" type="password" id="newPassword" required>#}
+                                {{ register_form.password1 }}
+                            </div>
+                            {% for error in register_form.password1.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                            <div class="d-flex justify-content-between mt-2">
+                                <label for="confirmPassword">Confirm Password:</label>
+                                {#                                <input type="password" id="confirmPassword" required>#}
+                                {{ register_form.password2 }}
+                            </div>
+                            {% for error in register_form.password2.errors %}
+                                <p style="color: red">{{ error }}</p>
+                            {% endfor %}
+                            {% for error in get_flashed_messages() %}
+                                {% if error != 'Your account has been successfully created and login!' %}
+                                    <p style="color: red">{{ error }}</p>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="col-12 d-flex mt-3 justify-content-end">
+                                {#                                <button type="submit">Register</button>#}
+                                {{ register_form.submit }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4" style="margin-left: 20px;">
+                {% for error in get_flashed_messages() %}
+                    {% if error == 'Your account has been successfully created and login!' %}
+                        <p style="color: green">{{ error }}</p>
+                    {% endif %}
+                {% endfor %}
+                <div class="pb-2">
+                    <h4>Login</h4>
+                </div>
+                <div>
+                    <form action="" method="post">
+                        {{ login_form.hidden_tag() }}
+                        <div class="d-flex justify-content-between">
+                            <label for="newPassword">Email:</label>
+                            {#                            <input type="password" id="newPassword" required>#}
+                            {{ login_form.email }}
+                        </div>
+                        {% for error in login_form.email.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                        <div class="d-flex justify-content-between mt-2">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            {#                            <input type="password" id="confirmPassword" required>#}
+                            {{ login_form.password }}
+
+                        </div>
+                        {% for error in login_form.password.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                        <div class="col-12 d-flex mt-3 justify-content-end">
+                            <button type="submit">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

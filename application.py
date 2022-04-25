@@ -11,6 +11,7 @@ application = Flask(__name__)
 
 login_manager = LoginManager()
 login_manager.init_app(application)
+login_manager.login_view = 'auth.index'
 
 
 @login_manager.user_loader
@@ -33,4 +34,4 @@ with application.app_context():
     db.create_all()
 
 if __name__ == '__main__':
-    application.run(debug=True, port=8000)
+    application.run(debug=True, port=5000)
