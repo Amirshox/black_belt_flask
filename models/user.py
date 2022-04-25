@@ -4,10 +4,11 @@ from utils.db import db
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
-bought_points_by_user_identifier = db.Table('bought_points_by_user_identifier',
-                                            db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-                                            db.Column('point_id', db.Integer, db.ForeignKey('point.id')),
-                                            )
+bought_points_by_user_identifier = db.Table(
+    'bought_points_by_user_identifier',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('point_id', db.Integer, db.ForeignKey('point.id')),
+)
 
 
 class User(UserMixin, db.Model):
