@@ -98,7 +98,7 @@ def bought_by_user(id):
     if bought_points_count == 0:
         if point.quantity > point.sold_count:
 
-            user.points.applicationend(point)
+            user.points.append(point)
             point.sold_count += 1
 
             db.session.add(user)
