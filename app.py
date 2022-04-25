@@ -6,10 +6,10 @@ from config import DATABASE_CONNECTION_URI
 from models import User
 from routes import auth, point
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(application)
 
 
 @login_manager.user_loader
@@ -18,15 +18,15 @@ def load_user(user_id):
 
 
 # settings
-app.secret_key = 'mysecret'
+application.secret_key = 'mysecret'
 
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_URI
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+application.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_URI
+application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # no cache
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
-SQLAlchemy(app)
+SQLAlchemy(application)
 
-app.register_blueprint(auth)
-app.register_blueprint(point, url_prefix='/points')
+application.register_blueprint(auth)
+application.register_blueprint(point, url_prefix='/points')

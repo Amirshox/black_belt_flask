@@ -77,6 +77,9 @@
                                 <div class="invalid-feedback">
                                     Please provide a valid Confirm Password.
                                 </div>
+                                {% for error in get_flashed_messages() %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
                             </div>
                             <p>{{ form.remember() }} {{ form.remember.label }}</p>
                             <div class="col-12 d-flex justify-content-between"
@@ -85,9 +88,6 @@
                                         href="{{ url_for('auth.register') }}">Create
                                     a new Account!</a></h6>
                                 {{ form.submit(class="btn btn-primary") }}
-                                {% for error in get_flashed_messages() %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
                             </div>
                         </form>
                     </div>
