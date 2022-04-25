@@ -6,8 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 bought_points_by_user_identifier = db.Table(
     'bought_points_by_user_identifier',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('point_id', db.Integer, db.ForeignKey('point.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE')),
+    db.Column('point_id', db.Integer, db.ForeignKey('point.id', ondelete='CASCADE')),
 )
 
 
@@ -17,8 +17,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(63))
     email = db.Column(db.String(63), unique=True)
     password = db.Column(db.String(200))
-    points = db.relationship("Point", secondary=bought_points_by_user_identifier, lazy='dynamic')
-
+    points = db.relationship("Point", secondary=bought_points_by_user_identifier, passive_deletes=True, lazy='dynamic')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

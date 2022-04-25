@@ -11,6 +11,5 @@ class Point(db.Model):
     quantity = db.Column(db.Integer)
     sold_count = db.Column(db.Integer, default=0)
 
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    author = db.relationship("User", backref=backref("user", uselist=False))
-
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    author = db.relationship("User", backref=backref("user", uselist=False), passive_deletes=True)

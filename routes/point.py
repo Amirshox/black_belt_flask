@@ -85,6 +85,7 @@ def update(id):
 @point.route("/<int:id>/delete/", methods=["GET"])
 def delete(id):
     point = Point.query.get(id)
+
     db.session.delete(point)
     db.session.commit()
 
