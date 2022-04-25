@@ -13,3 +13,4 @@ class Point(db.Model):
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship("User", backref=backref("user", uselist=False))
+

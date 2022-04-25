@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(200))
     points = db.relationship("Point", secondary=bought_points_by_user_identifier, lazy='dynamic')
 
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
