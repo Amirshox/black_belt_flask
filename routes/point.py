@@ -15,9 +15,9 @@ from sqlalchemy import desc
 def points():
     user_id = session["_user_id"]
 
-    points = Point.query.order_by(desc(Point.id))
+    points = list(Point.query.order_by(desc(Point.id))).copy()
     user = User.query.get(user_id)
-    bought_points = User.query.get(user_id).points.order_by(desc(Point.id))
+    bought_points = list(User.query.get(user_id).points.order_by(desc(Point.id))).copy()
 
     return render_template('point/point_list.html', points=points, bought_points=bought_points, user=user)
 
