@@ -23,7 +23,7 @@ def load_user(user_id):
 application.secret_key = 'mysecret'
 
 application.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_URI
-application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 SQLAlchemy(application)
 
@@ -34,4 +34,4 @@ with application.app_context():
     db.create_all()
 
 if __name__ == '__main__':
-    application.run(debug=True, port=5000)
+    application.run(debug=True, host="0.0.0.0", port=8000)
