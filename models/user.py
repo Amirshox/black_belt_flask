@@ -1,14 +1,9 @@
 from flask_login import UserMixin
+from sqlalchemy.orm import backref
 
 from utils.db import db
 
 from werkzeug.security import generate_password_hash, check_password_hash
-
-bought_points_by_user_identifier = db.Table(
-    'bought_points_by_user_identifier',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id', ondelete='CASCADE')),
-    db.Column('point_id', db.Integer, db.ForeignKey('point.id', ondelete='CASCADE')),
-)
 
 
 class User(UserMixin, db.Model):
@@ -17,7 +12,6 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(63))
     email = db.Column(db.String(63), unique=True)
     password = db.Column(db.String(200))
-    points = db.relationship("Point", secondary=bought_points_by_user_identifier, passive_deletes=True, lazy='dynamic')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -28,3 +22,13 @@ class User(UserMixin, db.Model):
     @property
     def full_name(self):
         return self.first_name + ' ' + self.last_name
+
+
+class UserPoint(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    point_id = db.Column(db.Integer, db.ForeignKey('point.id', ondelete='CASCADE'))
+    point = db.relationship("Point", backref=backref("points", uselist=False), passive_deletes=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    user = db.relationship("User", backref=backref("users", uselist=False), passive_deletes=True)

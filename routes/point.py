@@ -1,10 +1,12 @@
 import flask
 from flask import Blueprint, render_template, redirect, url_for, flash, session
 from flask_login import login_required
+from sqlalchemy import and_, or_, not_
 from sqlalchemy import desc
+from sqlalchemy.orm import load_only
 
 from forms.point import PointForm
-from models import Point, User
+from models import Point, User, UserPoint
 from utils.db import db
 
 point = Blueprint("point", __name__)
@@ -16,7 +18,15 @@ def points():
     user_id = session["_user_id"]
 
     user = User.query.get(user_id)
-    bought_points = user.points.order_by(desc(Point.id))
+
+    points_id = []
+
+    point_ids = UserPoint.query.filter(UserPoint.user_id.like(user_id)).with_entities(UserPoint.point_id).all()
+
+    for point_id in point_ids:
+        points_id.append(point_id[0])
+
+    bought_points = Point.query.filter(Point.id.in_(points_id)).order_by(desc(Point.id))
 
     points = Point.query.order_by(desc(Point.id))
 
@@ -30,8 +40,9 @@ def detail_point(id):
 
     point = Point.query.get(id)
 
-    is_buy = True if len(User.query.get(user_id).points.filter(
-        Point.id == id).all()) == 0 else False
+    is_buy = True \
+        if UserPoint.query.filter(and_(UserPoint.point_id.like(id), UserPoint.user_id.like(user_id))).count() == 0 \
+        else False
 
     return render_template('point/point_detail.html', point=point, is_buy=is_buy)
 
@@ -70,7 +81,6 @@ def update(id):
         db.session.add(point)
         db.session.commit()
 
-        flash('Point updated successfully!')
         return redirect(url_for('point.points', id=point.id))
 
     form.title.data = point.title
@@ -88,8 +98,6 @@ def delete(id):
     db.session.delete(point)
     db.session.commit()
 
-    flash('Point deleted successfully!')
-
     return redirect(url_for('point.points'))
 
 
@@ -98,23 +106,16 @@ def bought_by_user(id):
     user_id = session["_user_id"]
 
     point = Point.query.get(id)
-    user = User.query.get(user_id)
 
-    bought_points_count = len(User.query.get(user_id).points.filter(Point.id == id).all())
+    bought_points_count = UserPoint.query.filter(
+        and_(UserPoint.point_id.like(id), UserPoint.user_id.like(user_id))).count()
 
     if bought_points_count == 0:
         if point.quantity > point.sold_count:
-
-            user.points.append(point)
+            user_point = UserPoint(point_id=id, user_id=user_id)
             point.sold_count += 1
 
-            db.session.add(user)
+            db.session.add(user_point)
             db.session.commit()
 
-            flash('Point bought successfully!')
-        else:
-            flash('Point bought unsuccessfully!')
-    else:
-        flash('Point already bought!')
-
-    return redirect(url_for('point.points'))
+    return redirect(url_for('point.detail_point', id=id))
