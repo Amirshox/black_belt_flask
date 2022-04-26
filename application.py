@@ -32,6 +32,7 @@ application.register_blueprint(auth, url_prefix='/')
 
 with application.app_context():
     db.create_all()
+    db.session.commit()
 
 if __name__ == '__main__':
     application.run(debug=True, host="0.0.0.0", port=8000)
