@@ -12,27 +12,6 @@ from utils.db import db
 point = Blueprint("point", __name__)
 
 
-@point.route('/', methods=['GET'])
-@login_required
-def points():
-    user_id = session["_user_id"]
-
-    user = User.query.get(user_id)
-
-    points_id = list()
-
-    point_ids = UserPoint.query.filter(UserPoint.user_id.like(user_id)).with_entities(UserPoint.point_id).all()
-
-    for point_id in point_ids:
-        points_id.append(point_id[0])
-
-    bought_points = Point.query.filter(Point.id.in_(points_id)).order_by(desc(Point.id))
-
-    points = Point.query.order_by(desc(Point.id))
-
-    return render_template('point/point_list.html', points=points, bought_points=bought_points, user=user)
-
-
 @point.route('/<int:id>/', methods=['GET'])
 @login_required
 def detail_point(id):
@@ -47,7 +26,7 @@ def detail_point(id):
     return render_template('point/point_detail.html', point=point, is_buy=is_buy)
 
 
-@point.route('/new', methods=['GET', 'POST'])
+@point.route('/new/', methods=['GET', 'POST'])
 @login_required
 def add_point():
     form = PointForm()
@@ -119,3 +98,24 @@ def bought_by_user(id):
             db.session.commit()
 
     return redirect(url_for('point.detail_point', id=id))
+
+
+@point.route('/', methods=['GET'])
+@login_required
+def points():
+    user_id = session["_user_id"]
+
+    user = User.query.get(user_id)
+
+    points_id = list()
+
+    point_ids = UserPoint.query.filter(UserPoint.user_id.like(user_id)).with_entities(UserPoint.point_id).all()
+
+    for point_id in point_ids:
+        points_id.append(point_id[0])
+
+    bought_points = Point.query.filter(Point.id.in_(points_id)).order_by(desc(Point.id))
+
+    points = Point.query.order_by(desc(Point.id))
+
+    return render_template('point/point_list.html', points=points, bought_points=bought_points, user=user)

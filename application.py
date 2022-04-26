@@ -27,8 +27,8 @@ application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 SQLAlchemy(application)
 
-application.register_blueprint(auth, url_prefix='/auth')
 application.register_blueprint(point, url_prefix='/points')
+application.register_blueprint(auth, url_prefix='/')
 
 with application.app_context():
     db.create_all()
