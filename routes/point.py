@@ -41,6 +41,7 @@ def add_point():
         )
         db.session.add(point)
         db.session.commit()
+        db.session.refresh()
         return redirect(url_for('point.points'))
     return render_template('point/point_create.html', form=form)
 
