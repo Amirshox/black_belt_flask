@@ -19,14 +19,14 @@ def points():
 
     user = User.query.get(user_id)
 
-    points_id = []
-
-    point_ids = UserPoint.query.filter(UserPoint.user_id.like(user_id)).with_entities(UserPoint.point_id).all()
-
-    for point_id in point_ids:
-        points_id.append(point_id[0])
-
-    bought_points = Point.query.filter(Point.id.in_(points_id)).order_by(desc(Point.id))
+    # points_id = list()
+    #
+    # point_ids = UserPoint.query.filter(UserPoint.user_id.like(user_id)).with_entities(UserPoint.point_id).all()
+    #
+    # for point_id in point_ids:
+    #     points_id.append(point_id[0])
+    #
+    # bought_points = Point.query.filter(Point.id.in_(points_id)).order_by(desc(Point.id))
 
     points = Point.query.order_by(desc(Point.id))
 
