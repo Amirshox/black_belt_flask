@@ -31,20 +31,20 @@
                     </div>
                 </div>
             </div>
-{#            <div class="col-md-6 col-12 mt-5 ">#}
-{#                <h3>Your Purchased Pointings:</h3>#}
-{#                <div class="card mt-3 h-100" style="border: solid 2px;">#}
-{#                    <div class="card-body">#}
-{#                        {% for point in bought_points %}#}
-{#                            <a href="{{ url_for('point.detail_point', id=point.id) }}">{{ point.title }}</a> by#}
-{#                            {{ point.author.full_name }}#}
-{#                            <br>#}
-{#                        {% else %}#}
-{#                            <h4>Nothing bought!</h4>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
+            <div class="col-md-6 col-12 mt-5 ">
+                <h3>Your Purchased Pointings:</h3>
+                <div class="card mt-3 h-100" style="border: solid 2px;">
+                    <div class="card-body">
+                        {% for point in bought_points %}
+                            <a href="{{ url_for('point.detail_point', id=point.id) }}">{{ point.title }}</a> by
+                            {{ point.author.full_name }}
+                            <br>
+                        {% else %}
+                            <h4>Nothing bought!</h4>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 {% endblock %}
