@@ -105,17 +105,11 @@ def bought_by_user(id):
 def points():
     user_id = session["_user_id"]
 
-    user = User.query.get(user_id)
-
-    # points_id = list()
-    #
-    # point_ids = UserPoint.query.filter(UserPoint.user_id.like(user_id)).with_entities(UserPoint.point_id).all()
-    #
-    # for point_id in point_ids:
-    #     points_id.append(point_id[0])
-
-    bought_points = Point.query.join(UserPoint).filter(UserPoint.user_id == user_id).order_by(desc(Point.id))
-
     points = Point.query.order_by(desc(Point.id))
+
+    bought_points = Point.query.join(UserPoint, Point.id == UserPoint.point_id).filter(
+        UserPoint.user_id == user_id).order_by(desc(Point.id))
+
+    user = User.query.get(user_id)
 
     return render_template('point/point_list.html', points=points, bought_points=bought_points, user=user)
