@@ -111,4 +111,5 @@ def points():
         UserPoint.user_id == user_id).order_by(desc(Point.id))
 
     user = User.query.get(user_id)
+
     return render_template('point/point_list.html', points=points, bought_points=bought_points, user=user)
